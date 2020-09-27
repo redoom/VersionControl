@@ -20,6 +20,7 @@ namespace UserMaintenance
             InitializeComponent();
             lblFullName.Text = Resource1.FullName; 
             btnAdd.Text = Resource1.Add;
+            btnDelete.Text = Resource1.Delete;
             btnWriteToFile.Text = Resource1.WriteToFile;
 
             listUsers.DataSource = users;
@@ -40,13 +41,16 @@ namespace UserMaintenance
         {
             SaveFileDialog sfd = new SaveFileDialog();
 
+            sfd.Filter = "Comma Seperated Values (*.csv)|*.csv"; 
+            sfd.DefaultExt = "csv"; 
+            sfd.AddExtension = true;
+
             if (sfd.ShowDialog() != DialogResult.OK) return;
 
             using (StreamWriter sw = new StreamWriter(sfd.FileName, false, Encoding.UTF8))
             {
                 foreach (var s in users)
                 {
-
                     sw.Write(s.ID);
                     sw.Write(";");
                     sw.Write(s.FullName);
@@ -55,6 +59,11 @@ namespace UserMaintenance
                 }
             }
 
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            users.RemoveAt(listUsers.SelectedIndex);
         }
     }
 }

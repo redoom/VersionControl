@@ -25,13 +25,47 @@ namespace week4
             InitializeComponent();
             LoadData();
             CreateExcel();
-
+            CreateTable();
         }
         private void LoadData()
         {
             Flats = context.Flat.ToList();
         }
+
         private void CreateExcel()
+        {
+            try
+            {
+                // Excel elindítása és az applikáció objektum betöltése
+                xlApp = new Excel.Application();
+
+                // Új munkafüzet
+                xlWB = xlApp.Workbooks.Add(Missing.Value);
+
+                // Új munkalap
+                xlSheet = xlWB.ActiveSheet;
+
+                // Tábla létrehozása
+                CreateTable(); // Ennek megírása a következő feladatrészben következik
+
+                // Control átadása a felhasználónak
+                xlApp.Visible = true;
+                xlApp.UserControl = true;
+            }
+            catch (Exception ex) // Hibakezelés a beépített hibaüzenettel
+            {
+                string errMsg = string.Format("Error: {0}\nLine: {1}", ex.Message, ex.Source);
+                MessageBox.Show(errMsg, "Error");
+
+                // Hiba esetén az Excel applikáció bezárása automatikusan
+                xlWB.Close(false, Type.Missing, Type.Missing);
+                xlApp.Quit();
+                xlWB = null;
+                xlApp = null;
+            }
+        }
+
+        private void CreateTable()
         {
             string[] headers = new string[] {
             "Kód",
@@ -49,7 +83,7 @@ namespace week4
 
             for (int i = 0; i < headers.Length; i++)
             {
-                xlSheet.Cells[i+1, i+1] = headers[i];
+                xlSheet.Cells[1, (i+1)] = headers[i];
             }
 
             int counter = 0;
@@ -59,11 +93,18 @@ namespace week4
                 values[counter, 1] = f.Vendor;
                 values[counter, 2] = f.Side;
                 values[counter, 3] = f.District;
-                values[counter, 4] = f.Elevator;
+                if (f.Elevator)
+                {
+                    values[counter, 4] = "Van";
+                }
+                else
+                {
+                    values[counter, 4] = "Nincs";
+                }
                 values[counter, 5] = f.NumberOfRooms;
                 values[counter, 6] = f.FloorArea;
                 values[counter, 7] = f.Price;
-                values[counter, 8] = "=" + GetCell(counter, 7) + "/" + GetCell(counter, 6) ;
+                values[counter, 8] = "=" + GetCell(counter + 2, 8) + "/" + GetCell(counter + 2, 7) ;
                 counter++;
             }
 

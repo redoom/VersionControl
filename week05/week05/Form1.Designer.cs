@@ -30,6 +30,7 @@
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.saveBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
@@ -54,11 +55,22 @@
             this.dataGridView2.Size = new System.Drawing.Size(462, 474);
             this.dataGridView2.TabIndex = 1;
             // 
+            // saveBtn
+            // 
+            this.saveBtn.Location = new System.Drawing.Point(434, 547);
+            this.saveBtn.Name = "saveBtn";
+            this.saveBtn.Size = new System.Drawing.Size(247, 23);
+            this.saveBtn.TabIndex = 2;
+            this.saveBtn.Text = "Save";
+            this.saveBtn.UseVisualStyleBackColor = true;
+            this.saveBtn.Click += new System.EventHandler(this.saveBtn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1190, 545);
+            this.ClientSize = new System.Drawing.Size(1190, 582);
+            this.Controls.Add(this.saveBtn);
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.dataGridView1);
             this.Name = "Form1";
@@ -73,6 +85,7 @@
 
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.Button saveBtn;
     }
 }
 

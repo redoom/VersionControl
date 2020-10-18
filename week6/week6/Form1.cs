@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using week6.MnbServiceReference;
 using week6.Entities;
+using System.Xml;
 
 namespace week6
 {
@@ -32,7 +33,31 @@ namespace week6
             var response = mnbService.GetExchangeRates(request);
             var result = response.GetExchangeRatesResult;
 
+            CreatePortfolio(result);
+
             dataGridView1.DataSource = Rates;
+        }
+
+        private void CreatePortfolio(string result)
+        {
+            var xml = new XmlDocument();
+            xml.LoadXml(result);
+
+            foreach (XmlElement element in xml.DocumentElement)
+            {
+                var rate = new RateData();
+                Rates.Add(rate);
+
+                rate.Date = DateTime.Parse(element.GetAttribute("date"));
+
+                var childElement = (XmlElement)element.ChildNodes[0];
+                rate.Currency = childElement.GetAttribute("curr");
+
+                var unit = decimal.Parse(childElement.GetAttribute("unit"));
+                var value = decimal.Parse(childElement.InnerText);
+                if (unit != 0)
+                    rate.Value = value / unit;
+            }
         }
     }
 }

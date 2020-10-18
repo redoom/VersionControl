@@ -18,9 +18,13 @@ namespace week6
     public partial class Form1 : Form
     {
         BindingList<RateData> Rates = new BindingList<RateData>();
+        BindingList<string> Currencies = new BindingList<string>();
         public Form1()
         {
             InitializeComponent();
+
+            var currencies = new GetCurrenciesRequestBody();
+
             RefreshData();
 
         }

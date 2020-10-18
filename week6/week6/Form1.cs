@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using week6.MnbServiceReference;
 using week6.Entities;
 using System.Xml;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace week6
 {
@@ -33,12 +34,13 @@ namespace week6
             var response = mnbService.GetExchangeRates(request);
             var result = response.GetExchangeRatesResult;
 
-            CreatePortfolio(result);
+            UseXml(result);
+            CreateDiagarm();
 
             dataGridView1.DataSource = Rates;
         }
 
-        private void CreatePortfolio(string result)
+        private void UseXml(string result)
         {
             var xml = new XmlDocument();
             xml.LoadXml(result);
@@ -58,6 +60,24 @@ namespace week6
                 if (unit != 0)
                     rate.Value = value / unit;
             }
+        }
+        private void CreateDiagarm()
+        {
+            chartRateData.DataSource = Rates;
+
+            var series = chartRateData.Series[0];
+            series.ChartType = SeriesChartType.Line;
+            series.XValueMember = "Date";
+            series.YValueMembers = "Value";
+            series.BorderWidth = 2;
+
+            var legend = chartRateData.Legends[0];
+            legend.Enabled = false;
+
+            var chartArea = chartRateData.ChartAreas[0];
+            chartArea.AxisX.MajorGrid.Enabled = false;
+            chartArea.AxisY.MajorGrid.Enabled = false;
+            chartArea.AxisY.IsStartedFromZero = false;
         }
     }
 }

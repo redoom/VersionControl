@@ -23,10 +23,9 @@ namespace Week07
         public Form1()
         {
             InitializeComponent();
-            Population = GetPopulation(@"C:\Temp\nép.csv");
+            Population = GetPopulation(textBox1.Text);
             BirthProbabilities = GetBirthProbabilities(@"C:\Temp\születés.csv");
             DeathProbabilities = GetDeathProbabilities(@"C:\Temp\halál.csv");
-            Simulation();
         }
 
         public List<Person> GetPopulation(string csvpath)
@@ -107,6 +106,8 @@ namespace Week07
                 int nbrOfFemales = (from x in Population
                                     where x.Gender == Gender.Female && x.IsAlive
                                     select x).Count();
+
+                richTextBox1.Text = string.Format("Szimulációs év:{0} /n Fiúk:{1} /n Lányok:{2}", year, nbrOfMales, nbrOfFemales);
                 Console.WriteLine(
                     string.Format("Év:{0} Fiúk:{1} Lányok:{2}", year, nbrOfMales, nbrOfFemales));
             }
@@ -147,5 +148,14 @@ namespace Week07
             }
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Simulation();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -28,6 +28,7 @@ namespace week08.Abstractions
         public virtual void MoveToy()
         {
             Left += 1;
+
         }
     }
 }

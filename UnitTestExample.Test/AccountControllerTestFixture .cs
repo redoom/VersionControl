@@ -67,7 +67,6 @@ namespace UnitTestExample.Test
             // Assert
             Assert.AreEqual(email, actualResult.Email);
             Assert.AreEqual(password, actualResult.Password);
-            Assert.AreNotEqual(Guid.Empty, actualResult.ID);
         }
 
         [

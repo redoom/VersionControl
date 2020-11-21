@@ -33,10 +33,10 @@ namespace UnitTestExample.Test
         [
             Test,
             TestCase("Halika", false),
-            TestCase("HALIKA8", false),
-            TestCase("halika8", false),
+            TestCase("HALIKA88", false),
+            TestCase("halika88", false),
             TestCase("H", false),
-            TestCase("Halika8", true),
+            TestCase("Halika88", true),
         ]
         public void TestValidatePassword(string password, bool expectedResult)
         {
